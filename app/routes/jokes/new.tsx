@@ -57,7 +57,12 @@ export let action: ActionFunction = async ({
     return { fieldErrors, fields };
   }
 
-  let joke = await db.joke.create({ data: { ...fields, jokesterId: userId } });
+  let joke;
+  if (Math.random() < 0.5) {
+    joke = await db.joke.create3({ data: { ...fields, jokesterId: userId } });
+  } else {
+    joke = await db.joke.create({ data: { ...fields, jokesterId: userId } });
+  }
   return redirect(`/jokes/${joke.id}`);
 };
 
